@@ -110,7 +110,7 @@ static void test_embedded_pdf(const wchar_t *fixtures,const wchar_t *output) {
     wchar_t *licenses=portable_text(RESOURCE_LICENSES),*guide=portable_text(RESOURCE_GUIDE),path[P2L_PATH],error[512];
     Document *d=calloc(1,sizeof(*d));Project *p=malloc(sizeof(*p));HBITMAP bitmap;ExportJob *job;
     CHECK(licenses && wcsstr(licenses,L"pdfium.txt") && wcsstr(licenses,L"libjpeg_turbo") && wcslen(licenses)>100000);
-    CHECK(guide && wcsstr(guide,L"0.6") && wcsstr(guide,L"temporary") && wcsstr(guide,L"find_pixels") && wcsstr(guide,L"\r\n\r\n"));free(licenses);free(guide);
+    CHECK(guide && wcsstr(guide,L"0.6") && wcsstr(guide,L"Ctrl+V") && wcsstr(guide,L"Start recording") && wcsstr(guide,L"\r\n\r\n"));free(licenses);free(guide);
     /* The PDF engine has not been initialized by a PDF input before this test. */
     swprintf(path,P2L_PATH,L"%ls\\drawing.png",fixtures);CHECK(document_open(d,path,error,512));project_init(p,1);bitmap=render_export(d,p);CHECK(bitmap!=NULL);
     swprintf(path,P2L_PATH,L"%ls\\from raster é Ω.pdf",output);job=export_begin(path,EXPORT_PDF);CHECK(job!=NULL);
