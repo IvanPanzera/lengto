@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="480" viewBox="0 0 1280 480" role="img" aria-labelledby="title desc">
+  <title id="title">A recorded point carries position and color</title>
+  <desc id="desc">A schematic pixel becomes a Python Point with absolute coordinates, exact relative fractions, and an RGB triple. Scripts can search source pixels by color or a custom predicate.</desc>
+  <rect width="1280" height="480" rx="18" fill="#f3f5f5"/>
+  <g font-family="Segoe UI,Arial,sans-serif">
+    <text x="34" y="48" fill="#232c30" font-size="26" font-weight="600">From a selected pixel to an editable Python point.</text>
+    <rect x="34" y="80" width="308" height="302" rx="12" fill="white"/>
+    <g stroke="#e1e6e8" stroke-width="1" fill="none">
+      <path d="M78 119h220v220H78z M78 163h220 M78 207h220 M78 251h220 M78 295h220 M122 119v220 M166 119v220 M210 119v220 M254 119v220"/>
+    </g>
+    <rect x="166" y="207" width="44" height="44" fill="#1c1f23"/>
+    <circle cx="188" cy="229" r="6" stroke="#fff500" stroke-width="2" fill="none"/>
+    <path d="M188 199v-9 M188 259v9 M158 229h-9 M218 229h9" stroke="#00777e" stroke-width="2"/>
+    <text x="188" y="363" text-anchor="middle" font-size="16" fill="#56656b">Source pixel · schematic view</text>
+    <path d="M364 227h30m-9-9 9 9-9 9" fill="none" stroke="#00777e" stroke-width="2.5"/>
+    <rect x="416" y="80" width="830" height="302" rx="12" fill="#232c30"/>
+    <text x="444" y="115" fill="#abb9be" font-size="14" letter-spacing="1">RECORDED PYTHON · ZERO-BASED PIXEL INDICES</text>
+    <g font-family="Consolas,monospace" font-size="22">
+      <text x="446" y="163" fill="#fff500">Point(</text>
+      <text x="472" y="202" fill="#f3f6f7">absolute=(345, 120),</text>
+      <text x="472" y="241" fill="#f3f6f7">relative=(Fraction(345, 65634),</text>
+      <text x="604" y="280" fill="#f3f6f7">Fraction(120, 40000)),</text>
+      <text x="472" y="319" fill="#8ed8d6">rgb=(28, 31, 35)</text>
+      <text x="446" y="351" fill="#fff500">)</text>
+    </g>
+    <text x="34" y="421" fill="#232c30" font-size="18" font-weight="600">Choose absolute or relative coordinates. Keep the original RGB data.</text>
+    <text x="34" y="451" fill="#56656b" font-size="17">Find pixels by color, tolerance or a custom condition, then use them in measurement loops.</text>
+  </g>
+</svg>

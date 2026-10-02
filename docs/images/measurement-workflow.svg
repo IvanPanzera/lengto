@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="340" viewBox="0 0 1280 340" role="img" aria-labelledby="title desc">
+  <title id="title">Open. Calibrate. Measure. Automate.</title>
+  <desc id="desc">Four steps in lengto: open an image or PDF, set one known distance, measure with pixel snapping, and record a Python macro for repeatable work.</desc>
+  <rect width="1280" height="340" rx="18" fill="#f3f5f5"/>
+  <g font-family="Segoe UI,Arial,sans-serif" fill="#232c30">
+    <text x="34" y="47" font-size="25" font-weight="600">One reference. A repeatable workflow.</text>
+    <g transform="translate(34,76)">
+      <rect width="284" height="230" rx="12" fill="white"/>
+      <circle cx="30" cy="30" r="15" fill="#fff500"/><text x="30" y="36" font-size="16" text-anchor="middle" font-weight="700">1</text>
+      <g fill="none" stroke="#00777e" stroke-width="2.5"><path d="M31 65h39l13 13v42H31z M70 65v14h13"/><path d="m41 109 10-14 9 8 10-12 6 18"/><circle cx="48" cy="84" r="3"/></g>
+      <text x="24" y="157" font-size="26" font-weight="600">Open</text>
+      <text x="24" y="188" font-size="17" fill="#56656b">TIFF · PNG · JPEG · PDF</text>
+      <text x="24" y="212" font-size="15" fill="#56656b">One portable Windows executable.</text>
+    </g>
+    <g transform="translate(344,76)">
+      <rect width="284" height="230" rx="12" fill="white"/>
+      <circle cx="30" cy="30" r="15" fill="#fff500"/><text x="30" y="36" font-size="16" text-anchor="middle" font-weight="700">2</text>
+      <g fill="none" stroke="#00777e" stroke-width="2.5"><path d="M28 107h164 M28 96v22 M192 96v22"/><path d="m37 102-9 5 9 5 m146-10 9 5-9 5"/></g>
+      <text x="110" y="88" text-anchor="middle" font-size="19" fill="#00777e">5.00 m</text>
+      <text x="24" y="157" font-size="26" font-weight="600">Calibrate</text>
+      <text x="24" y="188" font-size="17" fill="#56656b">Mark a known distance.</text>
+      <text x="24" y="212" font-size="15" fill="#56656b">One uniform scale per document.</text>
+    </g>
+    <g transform="translate(654,76)">
+      <rect width="284" height="230" rx="12" fill="white"/>
+      <circle cx="30" cy="30" r="15" fill="#fff500"/><text x="30" y="36" font-size="16" text-anchor="middle" font-weight="700">3</text>
+      <g fill="none" stroke="#cdd9da" stroke-width="1"><path d="M28 66h96v60H28z M28 86h96 M28 106h96 M48 66v60 M68 66v60 M88 66v60 M108 66v60"/></g>
+      <path d="M38 116 114 76" fill="none" stroke="#00777e" stroke-width="2.5"/>
+      <g fill="#00777e"><circle cx="38" cy="116" r="4"/><circle cx="114" cy="76" r="4"/></g>
+      <text x="24" y="157" font-size="26" font-weight="600">Measure</text>
+      <text x="24" y="188" font-size="17" fill="#56656b">Pick two pixels. Keep going.</text>
+      <text x="24" y="212" font-size="15" fill="#56656b">Press Esc when you are done.</text>
+    </g>
+    <g transform="translate(964,76)">
+      <rect width="282" height="230" rx="12" fill="white"/>
+      <g stroke="#232c30" stroke-width="2.5" fill="none"><path d="m33 83 14 13-14 13 M60 112h30"/></g>
+      <circle cx="30" cy="30" r="15" fill="#fff500"/><text x="30" y="36" font-size="16" text-anchor="middle" font-weight="700">4</text>
+      <text x="113" y="109" font-size="38" fill="#00777e" font-family="Consolas,monospace">.py</text>
+      <text x="24" y="157" font-size="26" font-weight="600">Automate</text>
+      <text x="24" y="188" font-size="17" fill="#56656b">Record. Edit. Run in batches.</text>
+      <text x="24" y="212" font-size="15" fill="#56656b">Standard Python, no extra packages.</text>
+    </g>
+  </g>
+</svg>
