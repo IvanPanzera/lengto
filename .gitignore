@@ -1,0 +1,11 @@
+/build/
+/portable/
+/output/
+__pycache__/
+*.py[cod]
+*.dll
+*.obj
+*.exe
+*.pdb
+*.ilk
+*.zip

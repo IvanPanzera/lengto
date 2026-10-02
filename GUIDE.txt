@@ -1,0 +1,258 @@
+lengto 0.6 - portable image measurement
+Windows 10/11 x64. One executable, no installation.
+Project website: https://github.com/IvanPanzera/lengto
+
+GET STARTED
+Open lengto.exe and open or drag in a TIFF, PNG, JPEG or PDF.
+Use Ctrl+V or File > Paste to paste an image from the clipboard.
+Choose Measurements > Calibrate, enter a known distance and its unit,
+then click the two endpoints of the reference. Choose Measure and click
+endpoint pairs to create measurements. Press Esc to leave the tool.
+Save or export the annotated drawing as TIFF, JPEG, PNG or PDF.
+
+MENUS
+File: Open, Paste, Save, Save as, Export, Run script, Close.
+Measurements: Calibrate, Measure, Settings.
+Script: Start recording, Stop recording.
+Fit: fit the whole page in the window.
+?: Guide, GitHub, About. The Guide also has a GitHub button.
+Confirm applies a dialog; Esc or the close button cancels it.
+
+PASTE AN IMAGE
+The empty window shows only "open, drop or paste".
+Copy an image in another application and press Ctrl+V in lengto, or use
+File > Paste. PNG, DIB/DIBV5 and Windows bitmap clipboard data are supported.
+A copied image/PDF file from File Explorer can also be pasted.
+The clipboard is read without changing it. Text alone is not an image.
+Transparency is displayed over white. The pasted image keeps its source
+pixel grid and uses the same calibration, measurement and export tools.
+It stays in memory until closed; Save asks where to write it.
+Pasting replaces the open document after the normal unsaved-work prompt.
+Ctrl+V inside a text field continues to paste text into that field.
+
+CALIBRATION
+One uniform calibration applies to the whole document, including all pages.
+Calibrate lets you change its value or unit. Segment lets you replace the
+reference endpoints, including on another page. Esc cancels replacement.
+All measurements update when the calibration changes. The reference is
+drawn only on the page where it was defined.
+The program does not correct perspective, lens distortion or scan deformation.
+Use a known reference on the same plane as the features being measured.
+Both a decimal point and a decimal comma are accepted for the known length.
+
+MEASUREMENT AND PIXEL SNAP
+Each pair of clicks creates a separate measurement. Measure remains active
+until Esc, including after pan, zoom, Settings, saving or changing pages.
+Changing pages cancels an unfinished segment but keeps completed measurements.
+Each endpoint snaps to the center of the selected pixel. Two clicks on the
+same pixel do not create a zero-length measurement. Hold Shift while placing
+the second point to constrain the segment horizontally or vertically.
+Outside the Measure tool, click a measurement to select it. Delete removes
+it. Right-click a measurement to change its name or replace its segment.
+
+PAN, ZOOM AND PAGES
+Hold and drag the left mouse button to pan, including during a measurement.
+The mouse wheel zooms around the pointer. At full preview resolution, a
+single image pixel can fill the larger dimension of the viewport.
+Fit or F restores the whole-page view.
+
+For multipage TIFF and PDF files, click the bottom left/right arrow to go
+directly to the previous/next page. No page dialog opens.
+Click the current page number in the "1 / 18" indicator to type a page
+number in place. Enter applies it; Esc cancels it. Moving focus elsewhere
+also applies it. Numbers outside the document range use the nearest page.
+Page Up and Page Down also change pages. Disabled arrows mark the first and
+last page. Page controls are disabled while a script is running.
+
+SETTINGS
+Measurement unit and rounding precision share one dialog.
+Available units: Å, nm, µm, mm, cm, dm, m, dam, hm, km, Mm, Gm, AU, Tm, Pm, ly.
+The display unit is independent of the calibration unit.
+Precision is a rounding step in metres: integer powers from 10^-10 to 10^16.
+The initial value is 10^-3 m (1 mm). Changing units keeps the same step.
+Only displayed and exported labels are rounded; the original coordinates
+and calculated lengths remain unchanged. Rounding does not improve accuracy.
+
+SAVE AND EXPORT
+Save asks for an output file the first time; later saves update that file.
+Save as chooses another destination and format. The input file is preserved.
+TIFF and PDF can save all pages. JPEG and PNG save the current page only.
+Export lets you select a format and, for TIFF/PDF, the page scope.
+The last successful output becomes the destination for the next Save.
+If annotations remain unsaved on other pages, the document stays marked as
+modified. Closing a modified document offers to save it.
+
+Output contains the complete page with flattened annotations, regardless
+of pan or zoom. While the original stays open, measurements remain editable
+and repeated exports do not accumulate annotations. Reopening an exported
+image does not restore editable measurements. There is no project format;
+a recorded macro and the source image can reproduce a measurement session.
+
+Exports use the preview resolution. PDFs use a 144 dpi reference raster.
+Large images may have a reduced preview. PNG, TIFF and PDF output use lossless
+compression; JPEG uses quality 95. Writes use a temporary file and atomic
+replacement so a failed export preserves any previous destination file.
+
+RECORD A PYTHON MACRO
+1. Script > Start recording works even with no document open.
+2. Select Relative or Absolute coordinates.
+3. Open a drawing, calibrate, measure and optionally save/export.
+4. Script > Stop recording asks where to save the .py file.
+
+REC in the title and status bar means recording is active. Canceling the
+script save dialog or a failed write leaves the recording available.
+Closing lengto while recording asks you to save the macro.
+Recording does not require Python.
+
+The macro records document open/close, page changes, settings, calibration,
+measurements, edits, deletions and successful save/export operations.
+Pan, zoom and incomplete segments are not recorded. Starting with an open
+document also records its initial calibration, measurements and current page.
+The file references opened source documents on disk. Pasted images are
+included as lossless PNG data in the macro so replay does not depend on the
+clipboard or a temporary file. This makes those macro files larger.
+
+The .py starts with COORDINATES and an editable run() function, followed
+by its embedded Python support. No extra Python packages are needed.
+
+COORDINATES AND RGB
+Every recorded endpoint contains all three values, for example:
+  Point(absolute=(345, 120),
+        relative=(Fraction(345, 65634), Fraction(120, 40000)),
+        rgb=(28, 31, 35))
+
+Indices start at zero in the top-left corner. X goes right; Y goes down.
+The example refers to an image 65634 pixels wide and 40000 pixels high.
+Relative fractions use index/width and index/height, independently of zoom.
+Replay selects floor(fraction * current_dimension) and measures between
+pixel centers. Exact fractions reproduce the same pixels at the same size.
+
+COORDINATES = "relative" adapts positions to corresponding resized images;
+"absolute" repeats the original indices. The --coordinates option can
+override the setting. Relative replay assumes matching framing and aspect
+ratio; it does not align rotated, shifted, cropped or distorted images.
+
+RGB contains three integers in 0..255 from the original raster, including
+when the preview is reduced. PDF colors are sampled on its 144 dpi raster.
+Transparency is composited over white. Annotations added by lengto do not
+affect sampling; annotations already present in the input image do.
+Stored RGB does not automatically relocate an endpoint. Use find_pixels()
+explicitly to select pixels by color or a custom condition.
+
+RUN A SCRIPT
+Choose File > Run script. Operations appear in the current window.
+Before starting, you can save current edits. During execution, Esc stops
+Python and its child processes. Completed operations remain applied.
+Errors and print() output are shown at the end, retaining the last 8 KiB.
+A native operation already in progress finishes before Esc is handled.
+
+Running macros requires Python 3.8 or later. lengto looks for py.exe or
+python.exe; otherwise it asks you to choose one. A portable interpreter
+works. The choice lasts for the session; LENGTO_PYTHON can specify a path.
+lengto does not download or install Python. Scripts are normal Python
+programs and can read/write files with your user permissions.
+
+From a terminal, without the lengto window:
+  python macro.py --lengto "C:\tools\lengto.exe"
+  python macro.py --input "drawing.tif" --output "measured.pdf"
+  python macro.py --coordinates absolute
+
+Put lengto.exe beside the macro, or use --lengto, LENGTO_EXE or PATH.
+--input replaces the first recorded open operation. --output replaces the
+first recorded export. With only --input, the first output uses the input
+stem plus _measured and the recorded extension. Later paths stay literal
+unless you parameterize them. Record an export or add app.export() if the
+macro should produce a file.
+
+PYTHON API
+app.open(path), app.close(), app.page(number) with pages numbered from 1.
+app.open_image(png_bytes): open PNG bytes, including embedded clipboard images.
+app.info(): dimensions, current page, page count, measurement count, settings.
+app.settings(unit="mm", precision=-3): rounding step exponent in metres.
+app.calibrate(start, end, value=5, unit="m"): define or update the one scale.
+m = app.measure(start, end, name="Spacing"): create a measurement.
+app.edit_measurement(m, start, end, name="New name"): edit a measurement.
+app.delete_measurement(m): delete a measurement.
+app.export("measured.pdf", all_pages=True): format follows the extension.
+p = app.pixel(x, y): Point containing coordinates and source RGB.
+app.find_pixels(...): yield matching points from the source image.
+
+A plain (x, y) pair always uses absolute indices. Point uses the session's
+coordinate mode; calibrate/measure/edit_measurement also accept
+coordinates="absolute" or "relative" for an individual operation.
+m.metres is the unrounded distance in metres; m.value uses the display unit;
+m.rounded is rounded in that unit. m.unit and m.id identify the result.
+Returned Python values do not update when the calibration later changes.
+Measurement names can contain up to 79 characters.
+
+EXAMPLE: MEASURE BETWEEN DARK PIXELS ON SELECTED ROWS
+Inside run(), after app.open() and calibration:
+
+    width = app.info()["width"]
+    for y in (200, 300, 400):
+        points = list(app.find_pixels(
+            predicate=lambda r, g, b: max(r, g, b) < 100,
+            region=(0, y, width, y + 1)))
+        if len(points) >= 2:
+            left = min(points, key=lambda p: p.absolute[0])
+            right = max(points, key=lambda p: p.absolute[0])
+            m = app.measure(left, right, name=f"Row {y}")
+            print(y, m.metres, "m")
+    app.export(output_file or "edges.pdf")
+
+Adapt rows, thresholds and regions to your image. Text and other lines can
+also become endpoints; this is not automatic CAD recognition.
+
+Other searches:
+  app.find_pixels(rgb=(255, 0, 0), tolerance=15)
+  app.find_pixels(predicate=lambda r, g, b: r > 180 and g < 80 and b < 80)
+
+Tolerance is the maximum difference in each RGB channel. It helps with
+JPEG and scans where one line contains slightly different pixel colors.
+region=(left, top, right, bottom) uses absolute indices; right/bottom are
+excluded. step=2 samples every second pixel along both axes. limit=100
+stops after 100 matches; omit it to return all. With rgb and predicate,
+both conditions must match. Results are yielded in blocks.
+Measurements can be created during a search; do not change its document
+or page while iterating. The limit is 4096 drawn measurements per document;
+scripts can inspect more pixels or write numerical results using Python csv.
+
+BATCH EXAMPLE
+Save this beside a recording named macro.py:
+
+    from pathlib import Path
+    from macro import Lengto, COORDINATES, run
+
+    with Lengto(r"C:\tools\lengto.exe", COORDINATES) as app:
+        for file in sorted(Path(r"C:\drawings").glob("*.tif")):
+            output = file.with_name(file.stem + "_measured.pdf")
+            run(app, input_file=str(file), output_file=str(output))
+
+Record an open, calibration, measurements and export. Each new document
+starts without annotations. You can add loops, conditions and CSV reports.
+Macros recorded by version 0.5 retain their embedded API and still use
+the same engine protocol. Newly recorded macros use English API names.
+
+SHORTCUTS
+Ctrl+O: Open. Ctrl+V: Paste. Ctrl+S: Save. Ctrl+Shift+S: Save as. Ctrl+E: Export.
+Ctrl+W: Close document. F1: Guide. C: Calibrate. M: Measure. F: Fit.
+Esc: leave the current tool or stop a running script.
+Page Up/Page Down: previous/next page. Delete: delete selected measurement.
+
+PERFORMANCE AND PORTABILITY
+Only one preview page is decoded at a time. Its limit is 24 Mi pixels
+(96 MiB for the main pixel buffer) and 32768 pixels per side.
+Large images use a reduced preview/export; snapping and RGB sampling still
+use the original raster grid. PDF input uses 144 dpi. Memory also depends
+on codecs, document complexity, source sampling and export buffers.
+Password-protected PDFs, area measurement and FITS/WCS are not supported.
+
+The executable contains losslessly compressed PDF engine, guide, licenses
+and Python support. Windows decompresses resources as needed; no extra
+runtime is installed. PDFium is extracted to a private temporary folder,
+loaded only from there, then removed after normal exit. TEMP must be writable.
+No extra file is required beside the EXE for manual use or recording.
+No .NET, Java or Visual C++ Redistributable is required to run lengto.
+Python is optional and needed only to execute macros.
+No profiles, registry settings or services are installed. Use ? > GitHub
+or the Guide's GitHub button to open the project website in your browser.
