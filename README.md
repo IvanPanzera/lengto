@@ -27,6 +27,8 @@
 - **Save the result.** Export annotated images or PDFs; include all pages in TIFF/PDF.
 - **Repeat the work.** Record editable Python macros and apply them to other images or whole folders.
 
+![Open a document, calibrate a reference, measure between pixels and automate with Python](docs/images/measurement-workflow.png)
+
 ## Start in three steps
 
 1. [Download and run lengto.exe](https://github.com/IvanPanzera/lengto/releases/latest/download/lengto.exe). Open, drop or paste an image.
@@ -35,7 +37,15 @@
 
 [Quick guide →](docs/USER_GUIDE.md)
 
+## From pixels to Python
+
+![A recorded point carries absolute coordinates, exact relative fractions and the source RGB color](docs/images/pixel-to-python.png)
+
+Every recorded point keeps its **pixel coordinates, relative position and source color**. Edit the macro to find colored features, repeat measurements or process a folder. Relative coordinates adapt to resized images with matching framing; RGB searches let your script choose new endpoints.
+
 Python 3.8+ is needed only to **run macros**. Measuring and recording need nothing extra.
+
+[Explore the Python examples →](docs/PYTHON_EXAMPLES.md)
 
 **Know the limits:** one uniform scale per document; no perspective correction. Exports flatten annotations and use preview resolution. Keep the source and a macro to reproduce your work.
 
