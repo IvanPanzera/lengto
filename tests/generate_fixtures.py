@@ -1,0 +1,55 @@
+"""Generate deterministic format fixtures; Python is needed only by development tests."""
+from pathlib import Path
+from PIL import Image, ImageDraw, ImageFont
+from reportlab.pdfgen import canvas
+from reportlab.lib.utils import ImageReader
+
+root = Path(__file__).parent / "fixtures"
+root.mkdir(exist_ok=True)
+im = Image.new("RGB", (1200, 900), "white")
+d = ImageDraw.Draw(im)
+font_path = Path("C:/Windows/Fonts/segoeui.ttf")
+font = ImageFont.truetype(str(font_path), 22) if font_path.exists() else ImageFont.load_default()
+small = ImageFont.truetype(str(font_path), 16) if font_path.exists() else font
+d.text((60, 28), "TEST DRAWING / PLAN AND DETAIL", fill="#233e4a", font=font)
+d.text((60, 65), "One calibration across the whole drawing", fill="#70808a", font=small)
+for rect in [(100, 180, 600, 420), (90, 170, 610, 430), (320, 180, 330, 340)]:
+    d.rectangle(rect, outline="#303b41", width=3)
+d.line((320, 340, 370, 340), fill="#303b41", width=2)
+d.arc((270, 290, 370, 390), 270, 360, fill="#606e75", width=2)
+d.text((142, 270), "ROOM A", fill="#53606a", font=font)
+d.text((408, 270), "ROOM B", fill="#53606a", font=font)
+d.text((110, 465), "PLAN / known length 5.00 m", fill="#53606a", font=small)
+d.line((100, 145, 100, 120, 600, 120, 600, 145), fill="#6c7780", width=1)
+d.text((330, 95), "5.00", fill="#53606a", font=small)
+d.rectangle((750, 610, 1000, 720), outline="#303b41", width=3)
+for x in range(754, 998, 12):
+    d.line((x, 612, x, 718), fill="#c2c9cd", width=1)
+d.rectangle((750, 610, 850, 720), outline="#303b41", width=2)
+d.text((750, 760), "DETAIL / known length 2.50 m", fill="#53606a", font=small)
+d.line((750, 605, 750, 580, 1000, 580, 1000, 605), fill="#6c7780", width=1)
+d.text((862, 550), "2.50 m", fill="#53606a", font=small)
+d.line((60, 840, 1140, 840), fill="#d0d8dd")
+d.text((60, 853), "Synthetic application fixture. Not a construction drawing.", fill="#70808a", font=small)
+im.save(root / "drawing.png")
+im.save(root / "drawing.jpg", quality=92)
+im.save(root / "drawing.tif", compression="tiff_lzw")
+im.save(root / "drawing.tiff", compression="tiff_lzw")
+im.save(root / "drawing-multipage.tif", save_all=True, append_images=[Image.new("RGB", (640, 480), (30, 120, 200))], compression="tiff_lzw")
+im.save(root / "drawing é Ω.png")
+alpha = Image.new("RGBA", (20, 20), (0, 0, 0, 0))
+alpha.putpixel((10, 10), (255, 0, 0, 128))
+alpha.save(root / "alpha.png")
+large = Image.new("L", (8000, 4000), 255)
+ImageDraw.Draw(large).line((100, 100, 7000, 3000), fill=0, width=8)
+large.save(root / "large.png")
+pdf = canvas.Canvas(str(root / "drawing.pdf"), pagesize=(600, 450))
+pdf.drawImage(ImageReader(im), 0, 0, 600, 450)
+pdf.showPage()
+pdf.setPageSize((320, 240))
+pdf.setFillColorRGB(30/255, 120/255, 200/255)
+pdf.rect(0, 0, 320, 240, stroke=0, fill=1)
+pdf.save()
+(root / "damaged.pdf").write_bytes(b"%PDF-1.7\nnot a document")
+(root / "damaged.png").write_bytes(b"not a png")
+print(f"Created fixtures in {root}")
