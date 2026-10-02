@@ -33,6 +33,10 @@ if (-not (Test-Path -LiteralPath $taskPdfium)) { throw 'Pass -PdfiumPath with th
 $taskExpectedHash = (Get-Content -LiteralPath (Join-Path $taskRoot 'third_party\pdfium-sha256.txt') -Raw).Trim()
 if ((Get-FileHash -LiteralPath $taskPdfium -Algorithm SHA256).Hash -ne $taskExpectedHash) { throw 'The PDFium DLL does not match the bundled version and licenses.' }
 $taskLicenseParts = @('lengto - Included component licenses and provenance')
+$taskProjectLicense = Join-Path $taskRoot 'LICENSE'
+if (Test-Path -LiteralPath $taskProjectLicense) {
+    $taskLicenseParts += "`r`n----- lengto license -----`r`n" + (Get-Content -LiteralPath $taskProjectLicense -Raw -Encoding UTF8)
+}
 foreach ($taskLicense in (Get-ChildItem -LiteralPath (Join-Path $taskRoot 'third_party') -File -Recurse | Sort-Object FullName)) {
     $taskLicenseParts += "`r`n----- $($taskLicense.Name) -----`r`n" + (Get-Content -LiteralPath $taskLicense.FullName -Raw -Encoding UTF8)
 }
