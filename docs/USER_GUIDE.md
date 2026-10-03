@@ -2,7 +2,9 @@
 
 [Download lengto.exe](https://github.com/IvanPanzera/lengto/releases/latest/download/lengto.exe) · [Overview](../README.md)
 
-**Windows 10/11 x64. Download the EXE and run it. Nothing to install.**
+**Windows, Linux and macOS. [Choose your portable package](INSTALLATION.md).**
+
+On macOS, use **Command** in place of **Ctrl**; menus appear in the system menu bar.
 
 ## Measure your first drawing
 
@@ -42,4 +44,4 @@ Running macros needs **Python 3.8+**; recording does not. Absolute coordinates r
 - Exports contain **flattened annotations**, not editable measurement objects. Keep the original and a macro to reproduce a session.
 - PDF input uses **144 dpi**. Large images may have a reduced preview; exports use that resolution. More decimal places do not improve accuracy.
 
-**Trouble?** Check the calibration unit, choose a writable output folder, or select Python when prompted. Paste accepts image data or a copied supported file, not plain text. [Report persistent problems](https://github.com/IvanPanzera/lengto/issues).
+**Trouble?** Check the calibration unit, choose a writable output folder, or check the Python interpreter. Paste accepts image data or a copied supported file, not plain text. [Report persistent problems](https://github.com/IvanPanzera/lengto/issues).
