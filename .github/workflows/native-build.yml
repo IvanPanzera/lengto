@@ -1,0 +1,41 @@
+name: Build native packages
+on:
+  push:
+    branches: [codex/native-build]
+permissions:
+  contents: read
+jobs:
+  macos:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, macos-15-intel]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: tar -xzf native-source.tar.gz
+      - run: sh tools/package_macos.sh
+      - run: build/macos/lengto.app/Contents/MacOS/lengto --preview tests/fixtures/drawing.pdf build/macos-preview.png
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lengto-${{ matrix.os }}
+          path: |
+            portable/lengto-macos-universal.zip
+            build/macos-preview.png
+  linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+      - run: tar -xzf native-source.tar.gz
+      - run: sudo apt-get update && sudo apt-get install -y --no-install-recommends cmake ninja-build pkg-config libgtk-3-dev libtiff-dev libjpeg-dev libpng-dev xvfb xauth patchelf
+      - run: python3 tools/fetch_pdfium.py
+      - run: cmake -S . -B build/linux -G Ninja && cmake --build build/linux --parallel
+      - run: ctest --test-dir build/linux --output-on-failure
+      - run: xvfb-run -a build/linux/lengto --preview tests/fixtures/drawing.pdf build/linux-preview.png
+      - run: python3 tools/package_linux.py build/linux
+      - uses: actions/upload-artifact@v4
+        with:
+          name: lengto-linux-x86_64
+          path: |
+            portable/lengto-linux-x86_64.*
+            build/linux-preview.png
